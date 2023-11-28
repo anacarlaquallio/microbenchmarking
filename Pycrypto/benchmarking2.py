@@ -1,56 +1,45 @@
 import os
 import matplotlib.pyplot as plt
 import timeit
-from cryptography.hazmat.primitives import hashes
-from cryptography.hazmat.primitives.asymmetric import rsa, padding
+from Crypto.PublicKey import RSA
+from Crypto.Cipher import PKCS1_OAEP
 
-# Geração das chaves fora do loop
 def generate_keys(keys):
     rsa_keys = {}
     for key_size in keys:
-        private_key = rsa.generate_private_key(public_exponent=65537, key_size=key_size)
-        public_key = private_key.public_key()
-        rsa_keys[key_size] = (private_key, public_key)
+        rsa_keys[key_size] = RSA.generate(key_size)
     return rsa_keys
 
 def benchmark_encrypt(num_executions, keys, rsa_keys):
     execution_times = []
     for key_size in keys:
-        private_key, public_key = rsa_keys[key_size]
+        execution_time = 0
+        key = rsa_keys[key_size]
+        public_key = key.publickey()
+        cipher_rsa = PKCS1_OAEP.new(public_key)
         message = os.urandom(190)
-
-        total_time = sum(timeit.timeit(lambda: public_key.encrypt(message, padding.OAEP(
-            mgf=padding.MGF1(algorithm=hashes.SHA256()),
-            algorithm=hashes.SHA256(),
-            label=None
-        )), number=1) for _ in range(num_executions))
-
-        execution_times.append(total_time / num_executions)
-
+        for _ in range(num_executions):
+            start_time = timeit.default_timer()
+            ciphertext = cipher_rsa.encrypt(message)
+            end_time = timeit.default_timer()
+            execution_time += (end_time - start_time)
+        execution_times.append(execution_time / num_executions)
     return execution_times
 
 def benchmark_decrypt(num_executions, keys, rsa_keys):
     execution_times = []
     for key_size in keys:
-        private_key, public_key = rsa_keys[key_size]
+        execution_time = 0
+        key = rsa_keys[key_size]
+        cipher_rsa = PKCS1_OAEP.new(key)
         message = os.urandom(190)
-        ciphertext = public_key.encrypt(
-            message,
-            padding.OAEP(
-                mgf=padding.MGF1(algorithm=hashes.SHA256()),
-                algorithm=hashes.SHA256(),
-                label=None
-            )
-        )
-
-        total_time = sum(timeit.timeit(lambda: private_key.decrypt(ciphertext, padding.OAEP(
-            mgf=padding.MGF1(algorithm=hashes.SHA256()),
-            algorithm=hashes.SHA256(),
-            label=None
-        )), number=1) for _ in range(num_executions))
-
-        execution_times.append(total_time / num_executions)
-
+        ciphertext = cipher_rsa.encrypt(message)
+        for _ in range(num_executions):
+            start_time = timeit.default_timer()
+            plaintext = cipher_rsa.decrypt(ciphertext)
+            end_time = timeit.default_timer()
+            execution_time += (end_time - start_time)
+        execution_times.append(execution_time / num_executions)
     return execution_times
 
 # Valores de num_executions para as diferentes iterações
