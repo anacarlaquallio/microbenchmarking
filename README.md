@@ -18,3 +18,7 @@ No repositório, há duas pastas: uma para biblioteca Cryptography e outra para 
 * Microbenchmarking 4: o código gera chaves RSA de diferentes tamanhos e executa operações de decifração, medindo o tempo médio de execução e o uso de memória para cada iteração,.
 
 Note que cada um desses códigos oferece uma perspectiva diferente e, em conjunto, podem ajudar a compreender aspectos do desempenho do RSA em Python, como tempo de execução, consumo de memória e variações desses fatores com diferentes tamanhos de chave e iterações.
+
+### Documentação das bibliotecas RSA
+* Cryptography: https://cryptography.io
+* PyCrypto: https://pypi.org/project/pycrypto/
