@@ -9,17 +9,30 @@ from Crypto.Cipher import PKCS1_OAEP
 
 def generate_keys_cryptography(keys):
     rsa_keys = {}
+    generation_times = []
+
     for key_size in keys:
+        start_time = timeit.default_timer()
         private_key = rsa.generate_private_key(public_exponent=65537, key_size=key_size)
         public_key = private_key.public_key()
+        end_time = timeit.default_timer()
+
         rsa_keys[key_size] = (private_key, public_key)
-    return rsa_keys
+        generation_times.append(end_time - start_time)
+    return rsa_keys, generation_times
 
 def generate_keys_pycrypto(keys):
     rsa_keys = {}
+    generation_times = []
+
     for key_size in keys:
+        start_time = timeit.default_timer()
         rsa_keys[key_size] = RSA.generate(key_size)
-    return rsa_keys
+        end_time = timeit.default_timer()
+
+        generation_times.append(end_time - start_time)
+
+    return rsa_keys, generation_times
 
 def benchmark_encrypt_pycrypto(num_executions, keys, rsa_keys):
     memory_usage = []
@@ -76,8 +89,8 @@ iterations = [10, 100, 1000, 10000]
 keys = [2048, 4096]
 
 # Gerar chaves RSA para as duas implementações
-rsa_keys_cryptography = generate_keys_cryptography(keys)
-rsa_keys_pycrypto = generate_keys_pycrypto(keys)
+rsa_keys_cryptography, generation_time_cryptography = generate_keys_cryptography(keys)
+rsa_keys_pycrypto, generation_time_pycrypto = generate_keys_pycrypto(keys)
 
 # Listas para armazenar os tempos médios de criptografia e o uso de memória
 encrypt_times_cryptography = []
@@ -94,7 +107,7 @@ for num in iterations:
     encrypt_times_pycrypto.append(times_pycrypto)
     memory_usage_cryptography.append(memory_cryptography)
     memory_usage_pycrypto.append(memory_pycrypto)
-
+  
 # Plotar os gráficos comparativos de tempo de execução
 plt.figure(figsize=(8, 6))
 for i, key in enumerate(keys):
@@ -122,3 +135,18 @@ plt.legend()
 plt.grid(True)
 plt.show()
 
+print("Tempo de geração das chaves no Cryptography em segundos", generation_time_cryptography)
+print("Tempo de geração das chaves no Pycrypto em segundos", generation_time_pycrypto)
+
+labels = [f"{key}-bits" for key in keys]
+
+# Plotar o tempo de geração das chaves para ambas as implementações
+plt.figure(figsize=(8, 6))
+plt.plot(labels, generation_time_cryptography, marker='o', label='Cryptography')
+plt.plot(labels, generation_time_pycrypto, marker='o', label='Pycrypto')
+plt.xlabel('Tamanho da Chave')
+plt.ylabel('Tempo de Geração (segundos)')
+plt.title('Comparação do Tempo de Geração de Chaves RSA')
+plt.legend()
+plt.grid(True)
+plt.show()
