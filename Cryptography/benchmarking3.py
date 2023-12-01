@@ -38,7 +38,6 @@ def benchmark_encrypt(num_executions, keys, rsa_keys):
         # Medir o uso de memória após a execução
         mem_after = psutil.Process(os.getpid()).memory_info().rss
         memory_usage.append(mem_after - mem_before)
-        print("After: ", mem_after - mem_before)
 
     return execution_times, memory_usage
 
