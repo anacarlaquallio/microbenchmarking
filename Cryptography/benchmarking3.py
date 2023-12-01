@@ -5,6 +5,7 @@ from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.asymmetric import rsa, padding
 import psutil  # Para medir o uso de memória
 from memory_profiler import profile
+import gc
 
 def generate_keys(keys):
     rsa_keys = {}
@@ -22,6 +23,7 @@ def benchmark_encrypt(num_executions, keys, rsa_keys):
         private_key, public_key = rsa_keys[key_size]
         message = os.urandom(190)
 
+        #gc.collect()
         # Medir o uso de memória antes da execução
         mem_before = psutil.Process(os.getpid()).memory_info().rss
 
@@ -36,6 +38,7 @@ def benchmark_encrypt(num_executions, keys, rsa_keys):
         # Medir o uso de memória após a execução
         mem_after = psutil.Process(os.getpid()).memory_info().rss
         memory_usage.append(mem_after - mem_before)
+        print("After: ", mem_after - mem_before)
 
     return execution_times, memory_usage
 

@@ -114,7 +114,7 @@ for i, key in enumerate(keys):
     plt.plot(iterations, [times[i] for times in encrypt_times_cryptography], marker='o', label=f'Cryptography {key}-bits')
     plt.plot(iterations, [times[i] for times in encrypt_times_pycrypto], marker='o', label=f'Pycrypto {key}-bits')
 plt.xscale('log')
-plt.yscale('log')
+#plt.yscale('log')
 plt.xlabel('Número de Iterações')
 plt.ylabel('Tempo Médio (segundos)')
 plt.title('Comparação de Tempos Médios de Criptografia RSA (Cryptography vs Pycrypto)')
