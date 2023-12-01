@@ -83,7 +83,7 @@ encrypt_time, encrypt_memory = benchmark_encrypt(num_iterations, key_size, rsa_k
 decrypt_time, decrypt_memory = benchmark_decrypt(num_iterations, key_size, rsa_keys)
 
 # Exibir os resultados
-print(f"Tempo médio de criptografia para {num_iterations} iterações com chave de {key_size} bits: {encrypt_time} segundos")
-print(f"Uso médio de memória durante criptografia: {encrypt_memory} bytes")
-print(f"Tempo médio de descriptografia para {num_iterations} iterações com chave de {key_size} bits: {decrypt_time} segundos")
-print(f"Uso médio de memória durante descriptografia: {decrypt_memory} bytes")
+print(f"Tempo médio Encrypt para {num_iterations} iterações com chave de {key_size} bits: {encrypt_time} segundos")
+print(f"Uso médio de memória Encrypt: {encrypt_memory} bytes")
+print(f"Tempo médio Decrypt para {num_iterations} iterações com chave de {key_size} bits: {decrypt_time} segundos")
+print(f"Uso médio de memória Decrypt: {decrypt_memory} bytes")
