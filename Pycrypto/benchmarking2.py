@@ -61,13 +61,13 @@ for num in iterations:
 # Plotar o gráfico
 plt.figure(figsize=(8, 6))
 for i, key in enumerate(keys):
-    plt.plot(iterations, [times[i] for times in encrypt_times], marker='o', label=f'Criptografia {key}-bits')
-    plt.plot(iterations, [times[i] for times in decrypt_times], marker='o', label=f'Descriptografia {key}-bits')
+    plt.plot(iterations, [times[i] for times in encrypt_times], marker='o', label=f'Encrypt {key}-bits')
+    plt.plot(iterations, [times[i] for times in decrypt_times], marker='o', label=f'Decrypt {key}-bits')
 plt.xscale('log')
 plt.yscale('log')
 plt.xlabel('Número de Iterações')
 plt.ylabel('Tempo Médio (segundos)')
-plt.title('Tempos Médios de Criptografia e Descriptografia RSA')
+plt.title('Tempos Médios de Encrypt e Decrypt RSA')
 plt.legend()
 plt.grid(True)
 plt.show()

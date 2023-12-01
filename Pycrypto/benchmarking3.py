@@ -46,7 +46,7 @@ def plot_graphs(times, memory_usage, iterations, keys):
     plt.xscale('log')
     plt.xlabel('Número de Iterações')
     plt.ylabel('Tempo Médio (segundos)')
-    plt.title('Tempos Médios de Criptografia RSA')
+    plt.title('Tempos Médios de Encrypt RSA')
     plt.legend()
     plt.grid(True)
     plt.show()
