@@ -62,8 +62,8 @@ for num in iterations:
 # Plotar o gráfico
 plt.figure(figsize=(8, 6))
 for i, key in enumerate(keys):
-    plt.plot(iterations, [times[i] for times in encrypt_times], marker='o', label=f'Criptografia {key}-bits')
-    plt.plot(iterations, [times[i] for times in decrypt_times], marker='o', label=f'Descriptografia {key}-bits')
+    plt.plot(iterations, [times[i] for times in encrypt_times], marker='o', label=f'Cifração {key}-bits')
+    plt.plot(iterations, [times[i] for times in decrypt_times], marker='o', label=f'Decifração {key}-bits')
 plt.xscale('log')
 plt.yscale('log')
 plt.xlabel('Número de Iterações')
