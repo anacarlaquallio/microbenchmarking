@@ -14,8 +14,8 @@ No repositório, há duas pastas: uma para biblioteca Cryptography e outra para 
 
 * Microbenchmarking 1: gera um gráfico que exibe os tempos médios de cifração e decifração em relação ao número de iterações, para chaves de 2048 e 4096 bits. As chaves são geradas dentro do loop a cada iteração, o que torna-se muito lento.
 * Microbenchmarking 2: essa análise é semelhante à anterior, mas as chaves são geradas fora do loop e reutilizadas durante as iterações, o que faz o tempo de execução diminuir significativamente.
-* Microbenchmarking 3: o código gera chaves RSA de diferentes tamanhos e executa operações de criptografia, medindo o tempo médio de execução e o uso de memória para cada iteração.
-* Microbenchmarking 4: o código gera chaves RSA de diferentes tamanhos e executa operações de decifração, medindo o tempo médio de execução e o uso de memória para cada iteração,.
+* Microbenchmarking 3: o código gera chaves RSA de diferentes tamanhos e executa operações de cifração, medindo o tempo médio de execução e o uso de memória para cada iteração.
+* Microbenchmarking 4: o código gera chaves RSA de diferentes tamanhos e executa operações de decifração, medindo o tempo médio de execução/uso de memória para cada iteração,.
 
 Note que cada um desses códigos oferece uma perspectiva diferente e, em conjunto, podem ajudar a compreender aspectos do desempenho do RSA em Python, como tempo de execução, consumo de memória e variações desses fatores com diferentes tamanhos de chave e iterações.
 
